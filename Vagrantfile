@@ -37,30 +37,34 @@ Vagrant.configure("2") do |config|
         vb.gui = false
     end
 
-  controller = [{name: "controller-301", ip: "192.168.56.10", memory: 2048, cpus: 2}]
-  config.vm.define controller[:name] do |controller|
-        controller.vm.hostname = controller[:name]
-        controller.vm.network "private_network", ip: controller[:ip] 
+CONTROLLER = { name: "controller-301", ip: "192.168.56.10", memory: 2048, cpus: 2 }
+ 
+  config.vm.define CONTROLLER[:name] do |controller|
+        controller.vm.hostname = CONTROLLER[:name]
+        controller.vm.network "private_network", ip: CONTROLLER[:ip] 
         controller.vm.provider "virtualbox" do |vb|
-            vb.memory = controller[:memory]
-            vb.cpus = controller[:cpus]
-            vb.name = controller[:name]
+            vb.memory = CONTROLLER[:memory]
+            vb.cpus = CONTROLLER[:cpus]
+            vb.name = CONTROLLER[:name]
         end
         controller.vm.provision "shell", path: "scripts/bootstrap-ansible-controller.sh", privileged: false
         controller.vm.provision "shell", path: "scripts/deploy-private-key.sh", privileged: false
-  end
+    end
 
-  managed_nodes = [{name: "managed-301", ip: "192.168.56.11", memory: 1024, cpus: 1}]
-  managed_nodes.each do |node|
-        config.vm.define node[:name], autostart: true do |node|
-            node.vm.hostname = node[:name]
-            node.vm.network "private_network", ip: node[:ip]
+MANAGED_NODES = [
+    { name: "managed-301", ip: "192.168.56.11", memory: 1024, cpus: 1 }
+    ]
+
+  MANAGED_NODES.each do |managed|
+        config.vm.define managed[:name], autostart: true do |node|
+            node.vm.hostname = managed[:name]
+            node.vm.network "private_network", ip: managed[:ip]
             node.vm.provider "virtualbox" do |vb|
-                vb.memory = node[:memory]
-                vb.cpus = node[:cpus]
-                vb.name = node[:name]
+                vb.memory = managed[:memory]
+                vb.cpus = managed[:cpus]
+                vb.name = managed[:name]
             end
             node.vm.provision "shell", path: "scripts/deploy-public-key.sh", privileged: false
         end
-  end
+    end
 end
