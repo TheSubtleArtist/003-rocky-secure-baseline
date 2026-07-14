@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PRIVATE_KEY_PATH=/vagrant/vagrant/.ssh/ansible_lab
-DESTINATION_KEY_PATH=/home/vagrant/.ssh/ansible_lab
+PRIVATE_KEY_PATH=/vagrant/vagrant/.ssh/ansible_lab_003
+DESTINATION_KEY_PATH=/home/vagrant/.ssh/ansible_lab_003
 
 echo "Configuraing the SSH access for ansible controller"
 

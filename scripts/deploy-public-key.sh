@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PUBLIC_KEY_SOURCE="/vagrant/vagrant/.ssh/ansible_lab.pub"
+PUBLIC_KEY_SOURCE="/vagrant/vagrant/.ssh/ansible_lab_003.pub"
 AUTHORIZED_KEYS="/home/vagrant/.ssh/authorized_keys"
 
 if [ ! -f "$PUBLIC_KEY_SOURCE" ]; then
@@ -14,7 +14,7 @@ chmod 700 /home/vagrant/.ssh
 touch "$AUTHORIZED_KEYS"
 
 # search the contents of the authorized_keys file for the public key and add it if it doesn't exist
-if ! grep -q -f "$PUBLIC_KEY_SOURCE" "$AUTHORIZED_KEYS"; then
+if ! grep -qxF -f "$PUBLIC_KEY_SOURCE" "$AUTHORIZED_KEYS"; then
     cat "$PUBLIC_KEY_SOURCE" >> "$AUTHORIZED_KEYS"
     echo "Public key added to authorized_keys"
 else

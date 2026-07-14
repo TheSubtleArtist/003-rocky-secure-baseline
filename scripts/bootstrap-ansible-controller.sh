@@ -10,15 +10,12 @@ set -euo pipefail
 sudo dnf makecache -y
 
 # Install required packages for Ansible Controller
-sudo dnf install -y python3 python3-pip git openssh-clients
-
-# Install Ansible using pip
-python -m pip install --user ansible
+sudo dnf install -y python3 python3-pip git openssh-clients ansible-core
 
 echo "Ansible Controller setup completed successfully."
 
 echo "Ensuring user-local Python path is enabled"
 grep -qxF 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc" || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 
-echo "Validating Anisble installation"`
+echo "Validating Ansible installation"
 "$HOME/.local/bin/ansible" --version

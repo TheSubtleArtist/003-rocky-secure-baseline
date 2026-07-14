@@ -24,7 +24,7 @@ This project uses Ansible roles to apply a basic security baseline to the Rocky 
 
 ## Repository Structure
 
-002-rocky-ansible-roles/
+003-rocky-ansible-roles/
 ├── ansible/
 │   ├── roles/
 │   |   ├── common/

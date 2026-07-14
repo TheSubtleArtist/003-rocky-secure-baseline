@@ -20,7 +20,8 @@ ssh_key_private = File.join(ssh_key_path, "ansible_lab_003")
 ssh_key_public = "#{ssh_key_private}.pub"
 
 FileUtils.mkdir_p(ssh_key_path)
-unless File.directory?(ssh_key_path)
+
+unless File.exists(ssh_key_private)
   system(
     "ssh-keygen",
     "-t", "ed25519",
@@ -37,7 +38,7 @@ Vagrant.configure("2") do |config|
         vb.gui = false
     end
 
-CONTROLLER = { name: "controller-301", ip: "192.168.56.10", memory: 2048, cpus: 2 }
+CONTROLLER = { name: "controller-301", ip: "192.168.57.10", memory: 2048, cpus: 2 }
  
   config.vm.define CONTROLLER[:name] do |controller|
         controller.vm.hostname = CONTROLLER[:name]
@@ -52,7 +53,7 @@ CONTROLLER = { name: "controller-301", ip: "192.168.56.10", memory: 2048, cpus: 
     end
 
 MANAGED_NODES = [
-    { name: "managed-301", ip: "192.168.56.11", memory: 1024, cpus: 1 }
+    { name: "managed-301", ip: "192.168.57.11", memory: 1024, cpus: 1 }
     ]
 
   MANAGED_NODES.each do |managed|
